@@ -16,17 +16,6 @@ depends=("${_linuxprefix}" "nvidia-utils=${pkgver}" 'libglvnd')
 makedepends=("${_linuxprefix}-headers" "nvidia-dkms=$pkgver")
 provides=("nvidia=${pkgver}" 'NVIDIA-MODULE')
 options=(!strip)
-source=('linux70.patch')
-sha256sums=('7cc9af3a95443a88df3f998c94a9ce26e9c113a6e451b60b2d92528279d8c943')
-
-prepare() {
-  mkdir -p nvidia/${pkgver}/source_patched
-  cp -av /usr/src/nvidia-${pkgver}/* nvidia/${pkgver}/source_patched
-  cd nvidia/${pkgver}/source_patched
-  patch -p1 -i $srcdir/linux70.patch
-  cd ..
-  ln -sfv source_patched source
-}
 
 build() {
     _kernver="$(cat /usr/src/${_linuxprefix}/version)"
